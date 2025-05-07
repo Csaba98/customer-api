@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class ErrorsResponse extends ErrorResponseBase {
-	
+
 	private Map<String, String> error;
 
 	public ErrorsResponse(int status, LocalDateTime timestamp, Map<String, String> error, String path) {

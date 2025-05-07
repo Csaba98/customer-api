@@ -3,7 +3,7 @@ package com.customer.app.dto;
 import java.time.LocalDateTime;
 
 public class ErrorResponse extends ErrorResponseBase {
-	
+
 	private String error;
 
 	public ErrorResponse(int status, LocalDateTime timestamp, String error, String path) {

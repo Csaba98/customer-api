@@ -19,27 +19,23 @@ public class SecurityConfiguration {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests((authorize) -> authorize
-						.anyRequest().authenticated()
-			)
-			.httpBasic(withDefaults());
-		
+		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+				.httpBasic(withDefaults());
+
 		return http.build();
 	}
 
-    @Bean
-    InMemoryUserDetailsManager userDetailsService() { 	
+	@Bean
+	InMemoryUserDetailsManager userDetailsService() {
 		UserDetails user = User.withUsername("vcsaba")
-							   .password("$2a$10$K1GLrJgSD5RHakI52AiOPuvhWczCF/hzNDk2AEZltAT1Kwq7QcPje") //Abcd1234*-
-							   .roles("USER")
-							   .build();
+				.password("$2a$10$K1GLrJgSD5RHakI52AiOPuvhWczCF/hzNDk2AEZltAT1Kwq7QcPje") // Abcd1234*-
+				.roles("USER").build();
 		return new InMemoryUserDetailsManager(user);
 	}
-    
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }

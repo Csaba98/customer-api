@@ -8,10 +8,10 @@ import com.customer.app.entity.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-	
+
 	@Query(value = "select avg(age) from Customer")
 	Float getAvgAge();
-	
+
 	@Query(value = "select count(id) from Customer")
 	Long getRecordCount();
 
