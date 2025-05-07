@@ -23,5 +23,5 @@ public interface CustomerService {
 
 	public Map<String, Float> getCustomersAvgAge();
 
-	public List<Customer> getCustomersAgeRange(Byte minAge, Byte maxAge);
+	public List<Customer> getCustomersAgeRange(Short minAge, Short maxAge);
 }

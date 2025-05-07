@@ -43,7 +43,7 @@ public class Customer {
 	@NotNull(message = REQUIRED_STR)
 	@Min(value = 1, message = MIN_STR)
 	@Max(value = 127, message = MAX_STR)
-	private Byte age;
+	private Short age;
 
 	@NotNull(message = REQUIRED_STR)
 	@NotBlank(message = REQUIRED_STR)
@@ -90,11 +90,11 @@ public class Customer {
 		this.lastname = lastname;
 	}
 
-	public Byte getAge() {
+	public Short getAge() {
 		return age;
 	}
 
-	public void setAge(Byte age) {
+	public void setAge(Short age) {
 		this.age = age;
 	}
 

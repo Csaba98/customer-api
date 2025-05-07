@@ -111,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return response;
 	}
 
-	public List<Customer> getCustomersAgeRange(Byte minAge, Byte maxAge) {
+	public List<Customer> getCustomersAgeRange(Short minAge, Short maxAge) {
 		List<Customer> filteredCustomers = customerRepository.findAll().stream()
 				.filter(c -> (minAge <= c.getAge()) && (c.getAge() <= maxAge)).collect(Collectors.toList());
 

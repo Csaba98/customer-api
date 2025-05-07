@@ -34,7 +34,7 @@ public class DataLoader {
 
 			customer.setFirstname(CommonUtil.getRandomElement(firstNames));
 			customer.setLastname(CommonUtil.getRandomElement(lastNames));
-			customer.setAge((byte) rand.nextInt(1, 110));
+			customer.setAge(Integer.valueOf(rand.nextInt(1, 127)).shortValue());
 			customer.setPhone(
 					String.format("%s%s", CommonUtil.getRandomElement(phonePrefixes), rand.nextInt(1000000, 9999999)));
 			customer.setUsername((String.format("%s.%s", customer.getFirstname().toLowerCase(),

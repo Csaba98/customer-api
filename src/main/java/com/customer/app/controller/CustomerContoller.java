@@ -79,17 +79,17 @@ public class CustomerContoller {
 	@GetMapping("/filterbyage")
 	public ResponseEntity<List<Customer>> getCustomersAgeRange(HttpServletRequest request,
 			@RequestParam("minAge") String reqMinAge, @RequestParam("maxAge") String reqMaxAge) {
-		Byte minAge, maxAge;
+		Short minAge, maxAge;
 		CommonUtil.writeToLOG(HttpMethod.GET, request.getRequestURI(), request.getQueryString());
 
 		try {
-			minAge = Byte.valueOf(reqMinAge);
+			minAge = Short.valueOf(reqMinAge);
 		} catch (NumberFormatException e) {
 			throw new InvalidParameterException("minAge");
 		}
 
 		try {
-			maxAge = Byte.valueOf(reqMaxAge);
+			maxAge = Short.valueOf(reqMaxAge);
 		} catch (NumberFormatException e) {
 			throw new InvalidParameterException("maxAge");
 		}
