@@ -1,4 +1,4 @@
-package com.customer.app.dto;
+package com.customer.api.dto;
 
 import java.time.LocalDateTime;
 

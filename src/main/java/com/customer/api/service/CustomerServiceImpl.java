@@ -1,4 +1,4 @@
-package com.customer.app.service;
+package com.customer.api.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.customer.app.entity.Customer;
-import com.customer.app.exception.CustomerAlreadyExistsException;
-import com.customer.app.exception.CustomerNotFoundException;
-import com.customer.app.repository.CustomerRepository;
+import com.customer.api.entity.Customer;
+import com.customer.api.exception.CustomerAlreadyExistsException;
+import com.customer.api.exception.CustomerNotFoundException;
+import com.customer.api.repository.CustomerRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;

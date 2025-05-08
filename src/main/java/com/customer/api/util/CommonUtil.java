@@ -1,4 +1,4 @@
-package com.customer.app.util;
+package com.customer.api.util;
 
 import java.util.Random;
 

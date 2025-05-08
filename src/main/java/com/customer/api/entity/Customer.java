@@ -1,6 +1,6 @@
-package com.customer.app.entity;
+package com.customer.api.entity;
 
-import com.customer.app.converter.PasswordConverter;
+import com.customer.api.converter.PasswordConverter;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;

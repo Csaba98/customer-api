@@ -1,4 +1,4 @@
-package com.customer.app.controller;
+package com.customer.api.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.customer.app.entity.Customer;
-import com.customer.app.exception.InvalidParameterException;
-import com.customer.app.exception.InvalidRangeException;
-import com.customer.app.service.CustomerServiceImpl;
-import com.customer.app.util.CommonUtil;
+import com.customer.api.entity.Customer;
+import com.customer.api.exception.InvalidParameterException;
+import com.customer.api.exception.InvalidRangeException;
+import com.customer.api.service.CustomerServiceImpl;
+import com.customer.api.util.CommonUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.customer.app.converter;
+package com.customer.api.converter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

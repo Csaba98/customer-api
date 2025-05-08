@@ -1,4 +1,4 @@
-package com.customer.app.config;
+package com.customer.api.config;
 
 import java.util.Random;
 
@@ -7,10 +7,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import com.customer.app.entity.Customer;
-import com.customer.app.repository.CustomerRepository;
-
-import com.customer.app.util.CommonUtil;
+import com.customer.api.entity.Customer;
+import com.customer.api.repository.CustomerRepository;
+import com.customer.api.util.CommonUtil;
 
 @Component
 public class DataLoader {

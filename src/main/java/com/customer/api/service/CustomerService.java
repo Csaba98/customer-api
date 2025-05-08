@@ -1,9 +1,9 @@
-package com.customer.app.service;
+package com.customer.api.service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.customer.app.entity.Customer;
+import com.customer.api.entity.Customer;
 
 public interface CustomerService {
 

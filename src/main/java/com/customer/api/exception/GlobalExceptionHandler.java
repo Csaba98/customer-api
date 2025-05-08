@@ -1,4 +1,4 @@
-package com.customer.app.exception;
+package com.customer.api.exception;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.customer.app.dto.ErrorResponse;
-import com.customer.app.dto.ErrorsResponse;
+import com.customer.api.dto.ErrorResponse;
+import com.customer.api.dto.ErrorsResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 

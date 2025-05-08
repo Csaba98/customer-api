@@ -1,4 +1,4 @@
-package com.customer.app.exception;
+package com.customer.api.exception;
 
 public class InvalidParameterException extends RuntimeException {
 
