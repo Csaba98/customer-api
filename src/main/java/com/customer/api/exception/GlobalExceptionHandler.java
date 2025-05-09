@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler({ InvalidParameterException.class })
+	@ExceptionHandler(InvalidParameterException.class)
 	public ResponseEntity<ErrorResponse> handleInvalidParameterException(InvalidParameterException exception,
 			HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), LocalDateTime.now(),
@@ -31,8 +31,17 @@ public class GlobalExceptionHandler {
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
 	}
+	
+	@ExceptionHandler(InvalidRangeException.class)
+	public ResponseEntity<ErrorResponse> handleInvalidRangeException(InvalidRangeException exception,
+			HttpServletRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), LocalDateTime.now(),
+				exception.getMessage(), request.getRequestURI());
 
-	@ExceptionHandler({ CustomerNotFoundException.class })
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+	}
+
+	@ExceptionHandler(CustomerNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleCustomerNotFoundException(CustomerNotFoundException exception,
 			HttpServletRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), LocalDateTime.now(),

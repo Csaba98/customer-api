@@ -21,41 +21,24 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.customer.api.entity.Customer;
 import com.customer.api.exception.CustomerNotFoundException;
 import com.customer.api.repository.CustomerRepository;
+import com.customer.api.util.CommonUtil;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 public class CustomerServiceTests {
-
-	private final String PASSWORD_1 = "Abssdsd1232*-";
-	private final String PASSWORD_2 = "Abcdef16699*-";
 
 	@Autowired
 	private CustomerService customerService;
 
 	@Mock
 	private CustomerRepository customerRepository;
-
-	private Customer customerForTest(int i) {
-		Customer customer = new Customer();
-
-		customer.setFirstname("TestFirstName");
-		customer.setLastname("TestLastName");
-		customer.setAge((short) 20);
-		customer.setEmail("tstemail@hotmail.com");
-		customer.setPhone("+36201234567");
-
-		String password = i == 0 ? PASSWORD_1 : PASSWORD_2;
-		customer.setPassword(password);
-
-		customer.setUsername("test.username");
-
-		return customer;
-	}
 
 	@Test
 	@Order(1)
@@ -107,12 +90,12 @@ public class CustomerServiceTests {
 	@Test
 	@Order(6)
 	public void addCustomerTest() {
-		Customer customer = customerForTest(0);
+		Customer customer = CommonUtil.customerForTest(0);
 
 		customerService.addCustomer(customer);
 
 		assertNotNull(customer.getId());
-		assertNotEquals(PASSWORD_1, customer.getPassword());
+		assertNotEquals(CommonUtil.getPassword1Str(), customer.getPassword());
 	}
 
 	@Test
@@ -121,7 +104,7 @@ public class CustomerServiceTests {
 		List<Customer> customers = new ArrayList<Customer>();
 
 		for (int i = 0; i < 3; i++) {
-			Customer customer = customerForTest(i);
+			Customer customer = CommonUtil.customerForTest(i);
 			customers.add(customer);
 		}
 
@@ -129,9 +112,9 @@ public class CustomerServiceTests {
 
 		customers.forEach(customer -> assertNotNull(customer.getId()));
 
-		assertNotEquals(PASSWORD_1, customers.get(0).getPassword());
-		assertNotEquals(PASSWORD_2, customers.get(1).getPassword());
-		assertNotEquals(PASSWORD_2, customers.get(2).getPassword());
+		assertNotEquals(CommonUtil.getPassword1Str(), customers.get(0).getPassword());
+		assertNotEquals(CommonUtil.getPassword2Str(), customers.get(1).getPassword());
+		assertNotEquals(CommonUtil.getPassword2Str(), customers.get(2).getPassword());
 	}
 
 	@Test
@@ -139,15 +122,17 @@ public class CustomerServiceTests {
 	public void updateCustomerTest() {
 		assertDoesNotThrow(() -> {
 			Long id = 6L;
-			Customer beforeCustomer = customerService.getCustomerById(id);
+			Customer customer = customerService.getCustomerById(id);
+			String oldFirstName = customer.getFirstname();
+			String oldLastName = customer.getLastname();	
 
-			beforeCustomer.setFirstname("UpdatedFistName");
-			beforeCustomer.setLastname("UpdatedLastName");
+			customer.setFirstname("UpdatedFistName");
+			customer.setLastname("UpdatedLastName");
 
-			Customer afterCustomer = customerService.updateCustomer(customerService.getCustomerById(id));
+			customerService.updateCustomer(customer);
 
-			assertNotEquals(beforeCustomer.getFirstname(), afterCustomer.getFirstname());
-			assertNotEquals(beforeCustomer.getLastname(), afterCustomer.getLastname());
+			assertNotEquals(customer.getFirstname(), oldFirstName);
+			assertNotEquals(customer.getLastname(), oldLastName);
 		});
 	}
 
@@ -162,7 +147,7 @@ public class CustomerServiceTests {
 				longAdder.increment();
 
 				Customer customer = customerService.getCustomerById(longAdder.longValue());
-				customer.setPassword(i == 0 ? PASSWORD_1 : PASSWORD_2);
+				customer.setPassword(i == 0 ? CommonUtil.getPassword1Str() : CommonUtil.getPassword2Str());
 
 				customers.add(customer);
 			}
@@ -172,7 +157,7 @@ public class CustomerServiceTests {
 			assertTrue(customers.size() > 0);
 
 			for (int i = 0; i < 3; i++) {
-				assertNotEquals(i == 0 ? PASSWORD_1 : PASSWORD_2, customers.get(i).getPassword());
+				assertNotEquals(i == 0 ? CommonUtil.getPassword1Str() : CommonUtil.getPassword2Str(), customers.get(i).getPassword());
 			}
 		});
 	}
