@@ -27,8 +27,8 @@ public class SecurityConfiguration {
 
 	@Bean
 	InMemoryUserDetailsManager userDetailsService() {
-		UserDetails user = User.withUsername("vcsaba")
-				.password("$2a$10$K1GLrJgSD5RHakI52AiOPuvhWczCF/hzNDk2AEZltAT1Kwq7QcPje") // Abcd1234*-
+		UserDetails user = User.withUsername("test")
+				.password("$2a$10$K1GLrJgSD5RHakI52AiOPuvhWczCF/hzNDk2AEZltAT1Kwq7QcPje")
 				.roles("USER").build();
 		return new InMemoryUserDetailsManager(user);
 	}

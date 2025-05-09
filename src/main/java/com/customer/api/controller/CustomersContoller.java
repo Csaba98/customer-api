@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,23 +20,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.customer.api.dto.OnCreate;
+import com.customer.api.dto.OnUpdate;
 import com.customer.api.entity.Customer;
 import com.customer.api.exception.InvalidParameterException;
 import com.customer.api.exception.InvalidRangeException;
-import com.customer.api.service.CustomerServiceImpl;
+import com.customer.api.service.CustomerService;
 import com.customer.api.util.CommonUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/customer")
-public class CustomerContoller {
+@RequestMapping("/api/customers")
+public class CustomersContoller {
 
-	Logger logger = LoggerFactory.getLogger(CustomerContoller.class);
+	Logger logger = LoggerFactory.getLogger(CustomersContoller.class);
 
 	@Autowired
-	private CustomerServiceImpl customerService;
+	private CustomerService customerService;
 
 	@GetMapping
 	public ResponseEntity<List<Customer>> getAllCustomers(HttpServletRequest request) {
@@ -103,28 +106,23 @@ public class CustomerContoller {
 	}
 
 	@PostMapping
-	public ResponseEntity<Customer> addCustomer(HttpServletRequest request, @RequestBody @Valid Customer customer) {
+	@Validated(OnCreate.class)
+	public ResponseEntity<List<Customer>> addCustomers(HttpServletRequest request,
+			@RequestBody List<@Valid Customer> customers) {
 		CommonUtil.writeToLOG(HttpMethod.POST, request.getRequestURI());
-		Customer dbCustomer = customerService.addCustomer(customer);
+		List<Customer> dbCustomers = customerService.addCustomers(customers);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(dbCustomer);
+		return ResponseEntity.status(HttpStatus.CREATED).body(dbCustomers);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Customer> updateCustomer(HttpServletRequest request, @PathVariable("id") String reqId,
-			@RequestBody @Valid Customer customer) {
-		Long id;
+	@PutMapping
+	@Validated(OnUpdate.class)
+	public ResponseEntity<List<Customer>> updateCustomers(HttpServletRequest request,
+			@RequestBody List<@Valid Customer> customers) {
 		CommonUtil.writeToLOG(HttpMethod.PUT, request.getRequestURI());
+		List<Customer> dbCustomers = customerService.updateCustomers(customers);
 
-		try {
-			id = Long.valueOf(reqId);
-		} catch (NumberFormatException e) {
-			throw new InvalidParameterException("id");
-		}
-
-		Customer dbCustomer = customerService.updateCustomer(id, customer);
-
-		return ResponseEntity.ok(dbCustomer);
+		return ResponseEntity.ok(dbCustomers);
 	}
 
 	@DeleteMapping

@@ -1,6 +1,10 @@
 package com.customer.api.entity;
 
+import com.customer.api.annotation.ExistsId;
+import com.customer.api.annotation.UniqueId;
 import com.customer.api.converter.PasswordConverter;
+import com.customer.api.dto.OnCreate;
+import com.customer.api.dto.OnUpdate;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -21,49 +25,51 @@ public class Customer {
 	private static final String REQUIRED_STR = "Must be entered!";
 	private static final String MIN_STR = "Must be at least {value}!";
 	private static final String MAX_STR = "Must be at most {value}!";
-	private static final String MIN_CHAR_STR = "Must be at least {value} character(s)!";
-	private static final String MAX_CHAR_STR = "Must be at most {value} character(s)!";
+	private static final String MIN_CHAR_STR = "Must be at least {min} character(s)!";
+	private static final String MAX_CHAR_STR = "Must be at most {max} character(s)!";
 	private static final String VALID_EMAIL_STR = "Must be valid email!";
 	private static final String INVALID_PHONE_FORMAT_STR = "Invalid phone format! Must be +36(20|30|31|50|70)1234567 format!";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@UniqueId(groups = { OnCreate.class })
+	@ExistsId(groups = { OnUpdate.class })
 	private Long id;
 
-	@NotNull(message = REQUIRED_STR)
-	@NotBlank(message = REQUIRED_STR)
-	@Size(max = 50, message = MAX_CHAR_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@NotBlank(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Size(max = 50, message = MAX_CHAR_STR, groups = { OnCreate.class, OnUpdate.class })
 	private String firstname;
 
-	@NotNull(message = REQUIRED_STR)
-	@NotBlank(message = REQUIRED_STR)
-	@Size(max = 100, message = MAX_CHAR_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@NotBlank(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Size(max = 100, message = MAX_CHAR_STR, groups = { OnCreate.class, OnUpdate.class })
 	private String lastname;
 
-	@NotNull(message = REQUIRED_STR)
-	@Min(value = 1, message = MIN_STR)
-	@Max(value = 127, message = MAX_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Min(value = 1, message = MIN_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Max(value = 127, message = MAX_STR, groups = { OnCreate.class, OnUpdate.class })
 	private Short age;
 
-	@NotNull(message = REQUIRED_STR)
-	@NotBlank(message = REQUIRED_STR)
-	@Pattern(regexp = "[\\+](36)(20|30|31|50|70)\\d{7}", message = INVALID_PHONE_FORMAT_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@NotBlank(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Pattern(regexp = "[\\+](36)(20|30|31|50|70)\\d{7}", message = INVALID_PHONE_FORMAT_STR, groups = { OnCreate.class, OnUpdate.class })
 	private String phone;
 
-	@NotNull(message = REQUIRED_STR)
-	@NotBlank(message = REQUIRED_STR)
-	@Email(message = VALID_EMAIL_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@NotBlank(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Email(message = VALID_EMAIL_STR, groups = { OnCreate.class, OnUpdate.class })
 	private String email;
 
-	@NotNull(message = REQUIRED_STR)
-	@NotBlank(message = REQUIRED_STR)
-	@Size(max = 25, message = MAX_CHAR_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@NotBlank(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Size(max = 25, message = MAX_CHAR_STR, groups = { OnCreate.class, OnUpdate.class })
 	private String username;
 
 	@Convert(converter = PasswordConverter.class)
-	@NotNull(message = REQUIRED_STR)
-	@NotBlank(message = REQUIRED_STR)
-	@Size(min = 5, message = MIN_CHAR_STR)
+	@NotNull(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@NotBlank(message = REQUIRED_STR, groups = { OnCreate.class, OnUpdate.class })
+	@Size(min = 5, message = MIN_CHAR_STR, groups = { OnCreate.class, OnUpdate.class })
 	private String password;
 
 	public Long getId() {

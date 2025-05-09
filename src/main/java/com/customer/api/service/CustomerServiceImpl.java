@@ -3,7 +3,6 @@ package com.customer.api.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.customer.api.entity.Customer;
-import com.customer.api.exception.CustomerAlreadyExistsException;
 import com.customer.api.exception.CustomerNotFoundException;
 import com.customer.api.repository.CustomerRepository;
 
@@ -24,7 +22,6 @@ import jakarta.transaction.Transactional;
 public class CustomerServiceImpl implements CustomerService {
 
 	private static final String CUSTOMER_NOT_FOUND = "Customer with given id not found!";
-	private static final String CUSTOMER_EXISTS = "Customer with given id already exists!";
 	private static final String CUSTOMERS_DELETED = "Customers deleted successfully!";
 	private static final String CUSTOMER_DELETED = "Customer deleted successfully!";
 
@@ -45,16 +42,21 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	public Customer addCustomer(Customer customer) {
-		if (Objects.nonNull(customer.getId())) {
-			if (Objects.nonNull(getCustomer(customer.getId()))) {
-				throw new CustomerAlreadyExistsException(CUSTOMER_EXISTS);
-			}
-		}
-
+		customer.setId(null);	
+		
 		Customer dbCustomer = customerRepository.saveAndFlush(customer);
 		entityManager.refresh(dbCustomer);
 		return dbCustomer;
 	}
+
+	public List<Customer> addCustomers(List<Customer> customers) {
+		customers.forEach(customer -> customer.setId(null));
+		
+		List<Customer> dbCustomers = customerRepository.saveAllAndFlush(customers);
+		
+		dbCustomers.forEach(dbCustomer -> entityManager.refresh(dbCustomer));
+		return dbCustomers;
+	}	
 
 	public List<Customer> getAllCustomers() {
 		List<Customer> customers = customerRepository.findAll();
@@ -75,21 +77,18 @@ public class CustomerServiceImpl implements CustomerService {
 		return dbCustomer;
 	}
 
-	public Customer updateCustomer(Long id, Customer customer) {
-		Customer dbCustomer = getCustomer(id);
-
-		dbCustomer.setFirstname(customer.getFirstname());
-		dbCustomer.setLastname(customer.getLastname());
-		dbCustomer.setAge(customer.getAge());
-		dbCustomer.setEmail(customer.getEmail());
-		dbCustomer.setPhone(customer.getPhone());
-		dbCustomer.setUsername(customer.getUsername());
-		dbCustomer.setPassword(customer.getPassword());
-
-		dbCustomer = customerRepository.saveAndFlush(dbCustomer);
+	public Customer updateCustomer(Customer customer) {
+		Customer dbCustomer = customerRepository.saveAndFlush(customer);
 		entityManager.refresh(dbCustomer);
 		return dbCustomer;
 	}
+	
+	public List<Customer> updateCustomers(List<Customer> customers) {
+		List<Customer> dbCustomers = customerRepository.saveAllAndFlush(customers);
+		
+		dbCustomers.forEach(dbCustomer -> entityManager.refresh(dbCustomer));
+		return dbCustomers;
+	}		
 
 	public String deleteAllCustomers() {
 		customerRepository.deleteAll();

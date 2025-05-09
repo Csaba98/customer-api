@@ -2,26 +2,30 @@
 A simple API to manage customers data with in-memory database
 
 ## Authentication
-* username: vcsaba
+* username: test
 * password: Abcd1234*-
 
 ## API
 
 #### /api/customer
-* `GET` : Get all customers data
 * `POST` : Create a new customer
+* `PUT` : Update existing customer
+
+#### /api/customers
+* `GET` : Get all customers
+* `POST` : Create new customers
+* `PUT` : Update existing customers
 * `DELETE` : Delete all customers
 
-#### /api/customer/:id
+#### /api/customers/:id
 * `GET` : Get customer data
-* `PUT` : Update existing customer
 * `DELETE` : Delete customer
 
-#### /api/customer/count
+#### /api/customers/count
 * `GET` : Get customers count
 
-#### /api/customer/avgage
+#### /api/customers/avgage
 * `GET` : Get customers average age
 
-#### /api/customer/filterbyage?minAge=x&maxAge=y
+#### /api/customers/filterbyage?minAge=x&maxAge=y
 * `GET` : Get customers filter by age between x and y

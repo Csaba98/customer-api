@@ -8,6 +8,8 @@ import com.customer.api.entity.Customer;
 public interface CustomerService {
 
 	public Customer addCustomer(Customer customer);
+	
+	public List<Customer> addCustomers(List<Customer> customer);
 
 	public List<Customer> getAllCustomers();
 
@@ -15,7 +17,9 @@ public interface CustomerService {
 
 	public Customer getCustomerById(Long id);
 
-	public Customer updateCustomer(Long id, Customer customer);
+	public Customer updateCustomer(Customer customer);
+	
+	public List<Customer> updateCustomers(List<Customer> customer);
 
 	public String deleteAllCustomers();
 
