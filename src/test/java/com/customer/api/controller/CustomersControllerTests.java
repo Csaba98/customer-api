@@ -112,7 +112,8 @@ public class CustomersControllerTests {
 		mockMvc.perform(get(URI + "/filterbyage").queryParam("minAge", "6").queryParam("maxAge", "4"))
 				.andExpect(status().isBadRequest());
 
-		MvcResult result = mockMvc.perform(get(URI + "/filterbyage").queryParam("minAge", "10").queryParam("maxAge", "100"))
+		MvcResult result = mockMvc
+				.perform(get(URI + "/filterbyage").queryParam("minAge", "10").queryParam("maxAge", "100"))
 				.andExpect(status().isOk()).andReturn();
 
 		String json = result.getResponse().getContentAsString();
@@ -150,11 +151,11 @@ public class CustomersControllerTests {
 		customers = objectMapper.readValue(json, new TypeReference<List<Customer>>() {
 		});
 
-		customers.forEach(customer -> assertNotNull(customer.getId()));
-
-		assertNotEquals(CommonUtil.getPassword1Str(), customers.get(0).getPassword());
-		assertNotEquals(CommonUtil.getPassword2Str(), customers.get(1).getPassword());
-		assertNotEquals(CommonUtil.getPassword2Str(), customers.get(2).getPassword());
+		for (int i = 0; i < 3; i++) {
+			assertNotNull(customers.get(i).getId());
+			assertNotEquals(i == 0 ? CommonUtil.getPassword1Str() : CommonUtil.getPassword2Str(),
+					customers.get(i).getPassword());
+		}
 	}
 
 	@Test
