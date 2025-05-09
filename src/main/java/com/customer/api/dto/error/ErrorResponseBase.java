@@ -1,4 +1,4 @@
-package com.customer.api.dto;
+package com.customer.api.dto.error;
 
 import java.time.LocalDateTime;
 

@@ -14,7 +14,6 @@ import com.customer.api.entity.Customer;
 import com.customer.api.exception.CustomerNotFoundException;
 import com.customer.api.repository.CustomerRepository;
 
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,12 +23,9 @@ public class CustomerServiceImpl implements CustomerService {
 	private static final String CUSTOMER_NOT_FOUND = "Customer with given id not found!";
 	private static final String CUSTOMERS_DELETED = "Customers deleted successfully!";
 	private static final String CUSTOMER_DELETED = "Customer deleted successfully!";
-
+	
 	@Autowired
 	private CustomerRepository customerRepository;
-
-	@Autowired
-	private EntityManager entityManager;
 
 	private Customer getCustomer(Long id) {
 		Optional<Customer> customer = customerRepository.findById(id);
@@ -45,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setId(null);	
 		
 		Customer dbCustomer = customerRepository.saveAndFlush(customer);
-		entityManager.refresh(dbCustomer);
+		customerRepository.refresh(dbCustomer);
 		return dbCustomer;
 	}
 
@@ -54,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		List<Customer> dbCustomers = customerRepository.saveAllAndFlush(customers);
 		
-		dbCustomers.forEach(dbCustomer -> entityManager.refresh(dbCustomer));
+		dbCustomers.forEach(dbCustomer -> customerRepository.refresh(dbCustomer));
 		return dbCustomers;
 	}	
 
@@ -79,14 +75,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public Customer updateCustomer(Customer customer) {
 		Customer dbCustomer = customerRepository.saveAndFlush(customer);
-		entityManager.refresh(dbCustomer);
+		customerRepository.refresh(dbCustomer);
 		return dbCustomer;
 	}
 	
 	public List<Customer> updateCustomers(List<Customer> customers) {
 		List<Customer> dbCustomers = customerRepository.saveAllAndFlush(customers);
 		
-		dbCustomers.forEach(dbCustomer -> entityManager.refresh(dbCustomer));
+		dbCustomers.forEach(dbCustomer -> customerRepository.refresh(dbCustomer));
 		return dbCustomers;
 	}		
 

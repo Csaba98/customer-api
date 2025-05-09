@@ -15,7 +15,8 @@ public class ContextProvider implements ApplicationContextAware {
         ContextProvider.applicationContext = applicationContext;
     }
 
-    public static Object getBean(Class cls) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Object getBean(Class cls) {
         return ContextProvider.applicationContext.getBean(cls);
     }
 

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
-import com.customer.api.dto.ErrorResponse;
-import com.customer.api.dto.ErrorsResponse;
-import com.customer.api.dto.ListErrorsResponse;
+import com.customer.api.dto.error.ErrorResponse;
+import com.customer.api.dto.error.ErrorsResponse;
+import com.customer.api.dto.error.ListErrorsResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
