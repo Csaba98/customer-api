@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import com.customer.api.util.CommonUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
